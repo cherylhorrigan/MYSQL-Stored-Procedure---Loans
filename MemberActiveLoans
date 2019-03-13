@@ -1,0 +1,17 @@
+DELIMITER //
+CREATE PROCEDURE spMemberActiveLoansv2 (pEmailAddress VARCHAR (60))
+BEGIN
+	SELECT
+    	member.member_id,
+    	member.member_first_name,
+        member.member_last_name,
+        loanbook.book_id,
+        book.book_title,
+        loanbook.loan_start,
+        loanbook.loan_end
+  	FROM
+    	member INNER JOIN loanbook ON member.member_id = loanbook.member_id
+        INNER JOIN book ON book.book_id = loanbook.book_id
+    WHERE
+    	member.member_email = pEmailAddress AND loanbook.loan_status = 1;
+END
